@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self,username, email, password,**extra_fields):
         user = self.create_user(username=username,email=email, password=password,**extra_fields)
       
-        user.is_admin = True
+        user.is_staff = True
         user.is_superuser = True
         user.is_active = True
         user.save(using=self._db)
@@ -29,12 +29,10 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     VENDOR = 1
     CUSTOMER = 2
-    ADMIN = 3
-    SUPERUSER = 4
+    SUPERUSER = 3
     ROLE_CHOICE = (
         (VENDOR, 'Vendor'),
         (CUSTOMER, 'Customer'),
-        (ADMIN, 'Admin'),
         (SUPERUSER, 'Superuser'),
     )
     first_name = models.CharField(max_length=50,blank=True,null=True)
@@ -49,7 +47,7 @@ class User(AbstractBaseUser):
     updated_at = models.DateTimeField(auto_now=True)
 
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     objects = UserManager()
     
@@ -67,14 +65,8 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-    @property
-    def is_staff(self):
-        return self.is_admin
-        
     def save(self, *args, **kwargs):
         if self.is_superuser:
-            self.role = 4
-        elif self.is_admin:
             self.role = 3
         super().save(*args, **kwargs)
 
