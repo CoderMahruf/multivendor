@@ -78,7 +78,6 @@ class User(AbstractBaseUser):
             self.role = 3
         super().save(*args, **kwargs)
 
-
 class UserProfile(AbstractBaseUser):
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     profile_picture = models.ImageField(upload_to='user_images/')
@@ -92,4 +91,5 @@ class UserProfile(AbstractBaseUser):
 
     def __str__(self):
         return str(self.id)
+    
     
