@@ -7,6 +7,7 @@ from django.contrib.auth.tokens import default_token_generator
 from .forms import UserForm 
 from .models import User,UserProfile
 from apps.vendor.forms import VendorForm
+from apps.vendor.models import Vendor
 from .utils import detectUser,send_verification_email
 # Create your views here.
 
