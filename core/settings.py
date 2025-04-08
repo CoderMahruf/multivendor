@@ -139,3 +139,12 @@ AUTH_USER_MODEL = 'accounts.User'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True 
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "mahruf9060@gmail.com"
+EMAIL_HOST_PASSWORD = "jznr tyrt twrz ijhg"
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL =  'foodOnline Marketplace <mahruf9060@gmail.com>'
