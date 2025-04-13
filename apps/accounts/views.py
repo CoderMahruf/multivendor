@@ -8,6 +8,7 @@ from .forms import UserForm
 from .models import User,UserProfile
 from apps.vendor.forms import VendorForm
 from apps.vendor.models import Vendor
+from django.template.defaultfilters import slugify
 from .utils import detectUser,send_verification_email
 # Create your views here.
 
@@ -58,7 +59,7 @@ def registerUser(request):
 def registerVendor(request):
     if request.user.is_authenticated:
         messages.warning(request,'You are already logged in !')
-        return redirect('dashboard')
+        return redirect('myAccount')
     elif request.method == 'POST':
         form = UserForm(request.POST)
         v_form = VendorForm(request.POST,request.FILES)
@@ -73,6 +74,8 @@ def registerVendor(request):
             user.save()
             vendor = v_form.save(commit=False)
             vendor.user = user 
+            vendor_name = v_form.cleaned_data['vendor_name']
+            vendor.vendor_slug = slugify(vendor_name)+'-'+str(user.id)
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile 
             vendor.save()
