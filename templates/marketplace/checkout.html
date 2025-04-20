@@ -15,7 +15,7 @@
                             <div id="home" class="tab-pane in active">
                                 <div class="menu-itam-holder">
                                     <div id="menu-item-list-6272" class="menu-itam-list">
-                                        <form action="#" method="POST">
+                                        <form action="{% url 'place_order' %}" method="POST">
                                             {% csrf_token %}
                                             <div class="row">
                                                 <div class="form-group col-md-6 col-sm-12 col-lg-6">
@@ -62,28 +62,22 @@
                                 <div class="menu-itam-holder">
                                     <div id="menu-item-list-6272" class="menu-itam-list">
                                         <ul>
-                                            {% if cart_items %}
-                                                {% for item in cart_items %}
-                                                <li id="cart-item-{{item.id}}">
-                                                    <div class="image-holder"><img src="{{item.fooditem.image.url}}" alt=""></div>
-                                                    <div class="text-holder">
-                                                        <h6>{{item.fooditem}}</h6>
-                                                        <span>{{item.fooditem.description}}</span>
-                                                        <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{item.fooditem.vendor}}</a>
-                                                    </div>
-                                                    <div class="quantity" style="display: inline-block; position: absolute; top: 50%; transform: translateY(-50%); left: 50%; transform: translateX(-50%);">
-                                                        <span>{{item.quantity}} QTY</span>
-                                                    </div>
-                                                    <div class="price-holder">
-                                                        <span class="price">$ {{item.fooditem.price}}</span>
-                                                    </div>
-                                                </li>
-                                                {% endfor %}
-                                            {% else %}
-                                            <div class="text-center p-5">
-                                                <h3>Cart is empty ⛔</h3>
-                                            </div>
-                                            {% endif %}
+                                            {% for item in cart_items %}
+                                            <li id="cart-item-{{item.id}}">
+                                                <div class="image-holder"><img src="{{item.fooditem.image.url}}" alt=""></div>
+                                                <div class="text-holder">
+                                                    <h6>{{item.fooditem}}</h6>
+                                                    <span>{{item.fooditem.description}}</span>
+                                                    <a href="{% url 'vendor_detail' item.fooditem.vendor.vendor_slug %}" class="badge badge-warning">{{item.fooditem.vendor}}</a>
+                                                </div>
+                                                <div class="quantity" style="display: inline-block; position: absolute; top: 50%; transform: translateY(-50%); left: 50%; transform: translateX(-50%);">
+                                                    <span>{{item.quantity}} QTY</span>
+                                                </div>
+                                                <div class="price-holder">
+                                                    <span class="price">$ {{item.fooditem.price}}</span>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                     <div>
@@ -114,7 +108,26 @@
                                                     <span id="total">{{grand_total}}</span>
                                                 </span>
                                             </li>
-                                            <button type="submit" class="btn btn-danger w-100 p-2 mt-3">PLACE ORDER</button>
+                                            <!-- Select payment method -->
+                                            <h5>SELECT PAYMENT METHOD</h5>
+                                                <div style="display: flex; gap: 20px; align-items: center;">
+                                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                                        <input type="radio" name="payment_method" value="PayPal">
+                                                        <img src="{% static 'images/PayPal.png' %}" alt="PayPal" width="100">
+                                                    </label>
+
+                                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                                        <input type="radio" name="payment_method" value="Credit Card">
+                                                        <img src="{% static 'images/credit_card.png' %}" alt="Credit Card" width="100">
+                                                    </label>
+
+                                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                                        <input type="radio" name="payment_method" value="Bank Transfer">
+                                                        <img src="{% static 'images/bank_transfer.png' %}" alt="Bank" width="100">
+                                                    </label>
+                                                </div>
+                                            <!-- Select payment method -->
+                                            <button onclick="return payMethodConfirm()" type="submit" class="btn btn-danger w-100 p-2 mt-3">PLACE ORDER</button>
                                         </ul>
                                         <!-- end form here -->
                                     </form>
@@ -129,4 +142,16 @@
     </div>
 </div>
 <!-- Main Section End -->
+ <script>
+    function payMethodConfirm() {
+        const selectedPaymentMethod = document.querySelector('input[name="payment_method"]:checked');
+        if (!selectedPaymentMethod) {
+            alert("Please select a payment method.");
+            return false;
+        }
+        const paymentMethod = selectedPaymentMethod.value;
+        alert("You have selected " + paymentMethod + " as your payment method.");
+        return true; // Allow form submission
+    }
+ </script>
 {% endblock content %}
