@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'apps.accounts.context_processors.get_vendor',
                 'apps.accounts.context_processors.get_user_profile',
+                'apps.accounts.context_processors.get_paypal_client_id',
                 'apps.marketplace.context_processors.get_cart_counter',
                 'apps.marketplace.context_processors.get_cart_amounts',
             ],
@@ -156,3 +157,7 @@ EMAIL_HOST_USER = "mahruf9060@gmail.com"
 EMAIL_HOST_PASSWORD = "jznr tyrt twrz ijhg"
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL =  'foodOnline Marketplace <mahruf9060@gmail.com>'
+
+PAYPAL_CLIENT_ID = 'AQAp4ZTgQF_hA_QlXILggitb09GtpSstlRj6mN2J523MF4AkyneSlptFwHajaDELW3ggBmt8dPknbsrl'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups' 

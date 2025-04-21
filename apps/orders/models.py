@@ -11,14 +11,14 @@ class Payment(models.Model):
         ('BANK_TRANSFER', 'Bank Transfer'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    transection_id = models.CharField(max_length=255, unique=True)
-    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHODS) 
+    transaction_id = models.CharField(max_length=255, unique=True)
+    payment_method = models.CharField(max_length=200, choices=PAYMENT_METHODS) 
     amount = models.CharField(max_length=10)
     status = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.transection_id
+        return self.transaction_id
 
 class Order(models.Model):
     STATUS = (
@@ -50,7 +50,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Contenate first name and last name
+    # Concatenate first name and last name
     def name(self):
         return f"{self.first_name} {self.last_name}"
     
