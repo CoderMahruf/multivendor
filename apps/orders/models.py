@@ -64,6 +64,7 @@ class OrderdFood(models.Model):
     fooditem = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.FloatField()
+    amount = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) 
 
