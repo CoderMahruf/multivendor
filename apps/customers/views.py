@@ -1,8 +1,10 @@
 from django.shortcuts import render,get_object_or_404,redirect
+import simplejson as json
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.accounts.forms import UserProfileForm,UserInfoForm
 from apps.accounts.models import UserProfile
+from apps.orders.models import Order,OrderdFood
 
 # Create your views here.
 
@@ -29,3 +31,28 @@ def cprofile(request):
         'profile': profile,
     }
     return render(request,'customers/cprofile.html',context)
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
+    context = {
+        'orders':orders,
+    }
+    return render(request,'customers/my_orders.html',context)
+
+def order_detail(request,order_number):
+    try:
+        order = Order.objects.get(order_number=order_number,is_ordered=True)
+        ordered_food = OrderdFood.objects.filter(order=order)
+        subtotal = 0
+        for item in ordered_food:
+            subtotal += (item.price * item.quantity)
+        tax_data = json.loads(order.tax_data)
+        context = {
+            'order':order,
+            'ordered_food':ordered_food,
+            'subtotal':subtotal,
+            'tax_data':tax_data,
+        }
+        return render(request,'customers/order_detail.html',context)
+    except:
+        return redirect('customer')
