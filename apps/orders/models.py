@@ -30,7 +30,7 @@ class Order(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True,blank=True)
-    vendor = models.ManyToManyField(Vendor,blank=True)
+    vendors = models.ManyToManyField(Vendor,blank=True)
     order_number = models.CharField(max_length=20)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -51,8 +51,12 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     # Concatenate first name and last name
+    @property
     def name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def order_placed_to(self):
+        return ", ".join([str(i) for i in self.vendors.all()])
     
     def __str__(self):
         return self.order_number 

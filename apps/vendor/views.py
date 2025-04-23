@@ -11,6 +11,7 @@ from .models import Vendor,OepeningHour
 from apps.accounts.views import check_role_vendor
 from apps.menu.models import Category,FoodItem
 from apps.menu.forms import  CategoryForm,FoodItemForm
+from apps.orders.models import Order,OrderdFood
 # Create your views here.
 
 def get_vendor(request):
@@ -222,3 +223,15 @@ def remove_opening_hours(request,pk=None):
             hour = get_object_or_404(OepeningHour,pk=pk)
             hour.delete()
             return JsonResponse({'status':'success','id':pk})
+        
+def order_detail(request,order_number):
+    try:
+        order = Order.objects.get(order_number=order_number,is_ordered=True)
+        ordered_food = OrderdFood.objects.filter(order=order,fooditem__vendor=get_vendor(request))
+        context = {
+            'order':order,
+            'ordered_food':ordered_food,
+        }
+    except:
+        return redirect('vendor')
+    return render(request,'vendor/order_detail.html',context)
