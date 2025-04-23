@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.orders.request_object.RequestObjectMiddleware', # Custom middleware created to access the request object in apps.orders.models.py
 ]
 
 ROOT_URLCONF = 'core.urls'

@@ -25,4 +25,5 @@ urlpatterns = [
     path('opening-hours/remove/<int:pk>/',remove_opening_hours,name='remove_opening_hours'),
 
     path('order_detail/<int:order_number>/',order_detail,name='vendor_order_detail'),
+    path('my_orders/',my_orders,name='vendor_my_orders'),
 ]
