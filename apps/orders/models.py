@@ -8,7 +8,7 @@ from apps.vendor.models import Vendor
 request_object = ''
 class Payment(models.Model):
     PAYMENT_METHODS = (
-        ('CREDIT_CARD', 'Credit Card'),
+        ('SSL_COMMERZ', 'SSL Commerz'),
         ('PAYPAL', 'PayPal'),
         ('BANK_TRANSFER', 'Bank Transfer'),
     )

@@ -162,3 +162,8 @@ DEFAULT_FROM_EMAIL =  'foodOnline Marketplace <mahruf9060@gmail.com>'
 PAYPAL_CLIENT_ID = 'AQAp4ZTgQF_hA_QlXILggitb09GtpSstlRj6mN2J523MF4AkyneSlptFwHajaDELW3ggBmt8dPknbsrl'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups' 
+
+
+# SSL COMMERZ SETUP
+STORE_ID = 'bdtas6809c323664f7'
+STORE_PASS = 'bdtas6809c323664f7@ssl'
